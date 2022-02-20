@@ -22,7 +22,7 @@ jobs:
         #   run: checho "Error step"
    run-shell-command:
       runs-on: windows-latest
-      needs: ['run-shell-command']  #jobs default run paralell in different agent runners, however you can force to run serial by need first complete the other to run this one
+      needs: ["run-shell-command"]  #jobs default run paralell in different agent runners, however you can force to run serial by need first complete the other to run this one
       steps:
          - name: Directory Powershell
            run: Get-Location

@@ -16,8 +16,9 @@ jobs:
            run: |
                import platform
                print(platform.processor())
-# set secrets ACTIONs_STEP_DEBUG: true, ACTIONS_RUNNER_DEBUG: true
-         - name: error step to test debug
-           run: checho "Error step"
+           shell: python #Inform github action to use python shell intead of default bash
+        # set secrets ACTIONs_STEP_DEBUG: true, ACTIONS_RUNNER_DEBUG: true
+        # - name: error step to test debug
+        #   run: checho "Error step"
 
 

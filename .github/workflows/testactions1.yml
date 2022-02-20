@@ -12,5 +12,8 @@ jobs:
            run: |
                node -v
                npm -v
+# set secrets ACTIONs_STEP_DEBUG: true, ACTIONS_RUNNER_DEBUG: true
+         - name: error step to test debug
+           run: checho "Error step"
 
 

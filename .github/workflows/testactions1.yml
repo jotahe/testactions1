@@ -21,10 +21,11 @@ jobs:
         # - name: error step to test debug
         #   run: checho "Error step"
     run-shell-command:
-        runs-on:
+        runs-on: windows-latest
         steps:
-           - name: directory Powershell
+           - name: Directory Powershell
              run: Get-Location
            - name: Directory bash
+             run: pwd
              shell: bash
 

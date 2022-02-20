@@ -1,0 +1,16 @@
+name: Shell Commands
+# Which action will trigger the workflow
+on: [push]
+# What would be run
+jobs:
+   run-shell-command:
+      runs-on: ubuntu-20.04
+      steps:
+         - name: echo a string
+           run: echo "Hello from Testactions1"
+         - name: multiline script
+           run: |
+               node -v
+               npm -v
+
+

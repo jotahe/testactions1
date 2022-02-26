@@ -1,0 +1,36 @@
+name: Shell Commands
+# Which action will trigger the workflow
+on: [push]
+# What would be run
+jobs:
+   run-shell-command:
+      runs-on: ubuntu-20.04
+      steps:
+         - name: echo a string
+           run: eccho "Hello from Testactions1"
+           continue-on-error: true  # this would force to continue other steps no matter the previos step have failed
+         - name: echo a string
+           run: eccho "Continue even if the last step failed"
+         - name: multiline script
+           if: failure()  # Will run this step even if the last step failed
+           run: |
+               node -v
+               npm -v
+         - name: python step
+           run: |
+               import platform
+               print(platform.processor())
+           shell: python #Inform github action to use python shell intead of default bash
+         # set secrets ACTIONs_STEP_DEBUG: true, ACTIONS_RUNNER_DEBUG: true
+        # - name: error step to test debug
+        #   run: checho "Error step"
+   run-windows-command:
+      runs-on: windows-latest
+      needs: ["run-shell-command"]  #jobs default run paralell in different agent runners, however you can force to run serial by need first complete the other to run this one
+      steps:
+         - name: Directory Powershell
+           run: Get-Location
+         - name: Directory bash
+           run: pwd
+           shell: bash
+

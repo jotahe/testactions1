@@ -3,12 +3,18 @@ on: push
 
 jobs:
   node-version:
-    runs-on: ubuntu-20.04
+    strategy:
+      matrix:          # run the workflow in multiple node version and multiple os 9 times
+        os: [macos-latest, ubuntu-latest, windows-latest] # The job will run three times one for each os
+        node_version: [6,8,10] # the workflow will run 3 times one for each node version
+      #fail-fast: true # Github cancels all in progress jobs in anyone of the matrix jobs fails
+      #max-parallel: 0  # Limit the running of jobs that can run parallel
+    runs-on: ${{ matrix.os }} # we reference each of the os defined in the strategy matrix object
     steps:
       - name: Log node node-version
         run: node -v   # Display current version of our virtual machine
       - uses: actions/setup-node@v1
         with:
-          node-version: 6
+          node-version: ${{ matrix.node_version}}  # Reference by context the node version variable
       - name: Log node version after the actions/setup-node
         run: node -v

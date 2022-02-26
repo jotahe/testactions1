@@ -26,6 +26,7 @@ jobs:
         #   run: checho "Error step"
    run-windows-command:
       runs-on: windows-latest
+      timeout-minutes: 2 # Maximum number of minutes to let a workflow run before github automatic cancels it 6 hours 360 min
       needs: ["run-shell-command"]  #jobs default run paralell in different agent runners, however you can force to run serial by need first complete the other to run this one
       steps:
          - name: Directory Powershell

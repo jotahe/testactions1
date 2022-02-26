@@ -28,6 +28,6 @@ jobs:
         with:
           node-version: ${{ matrix.node_version}}  # Reference by context the node version variable
       - name: Log node version after the actions/setup-node
-        run: |                      # We print the environment variable to confirm
-        node -v
-        echo $IS_UBUNTU_8       
+        run: |                                   # We print the environment variable to confirm
+          node -v
+          echo $IS_UBUNTU_8     

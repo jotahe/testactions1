@@ -1,0 +1,14 @@
+name: Matrix
+on: push
+
+jobs:
+  node-version:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Log node node-version
+        run: node -v   # Display current version of our virtual machine
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 6
+      - name: Log node version after the actions/setup-node
+        run: node -v

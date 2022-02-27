@@ -18,6 +18,7 @@ jobs:
       #volumes:  # we can map volumes to the container
     steps:
       - name: Post a user
-        run: "curl -X POST http://localhost:3001/api/users -H 'Content-Type: application/json' -d '{\"username\": \"hello\",\"address\": \"dwded\"}'"
+        # In order to run qe use 
+        run: 'curl -X POST http://localhost:3001/api/users -H ''Content-Type: application/json'' -d ''{"username": "hello","address": "dwded"}'''
       - name: Get Users
-        run: curl http://localhost:3001/api/users
+        run: curl http://localhost:3001/api/user

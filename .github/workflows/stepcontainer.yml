@@ -25,6 +25,11 @@ jobs:
         with:
           entrypoint: "./dockerscript.sh" # To pass wntry point we have to check the complete path of executable with type -a command
           args: "www.google.com www.microsoft.com"
+      - name: Send a Slack Notification to a Channel   # In order to interact with slack channel we must create an app app.slack.com/app, configure for workspace and channel
+        uses: docker://technosophos/slack-notify
+        env:  # The webhook needs to be configured by secret because if not slack would block it and send an email about the expose of your secret to write to channel
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK}}  # webhook copied from slack application, after authorizing the webhook to a slack channel
+          SLACK_MESSAGE: "Publishing something to slack channel from github actions"
   node-docker:
     runs-on: ubuntu-latest # we would run a job inside a docker container in the virtual machine
     container:

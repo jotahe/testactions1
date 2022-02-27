@@ -1,3 +1,3 @@
 #!/bin/bash
-ping $1
+echo $1 $2
 echo "Hi from personal docker script"

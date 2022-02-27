@@ -24,7 +24,7 @@ jobs:
         uses: docker://node:12.14.1-alpine3.10
         with:
           entrypoint: "./dockerscript.sh" # To pass wntry point we have to check the complete path of executable with type -a command
-          args: "www.google.com www.microsoft.com"
+          args: "hi google"
       - name: Send a Slack Notification to a Channel   # In order to interact with slack channel we must create an app app.slack.com/app, configure for workspace and channel
         uses: docker://technosophos/slack-notify
         env:  # The webhook needs to be configured by secret because if not slack would block it and send an email about the expose of your secret to write to channel

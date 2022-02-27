@@ -21,4 +21,4 @@ jobs:
         # In order to run qe use 
         run: 'curl -X POST http://localhost:3001/api/users -H ''Content-Type: application/json'' -d ''{"username": "hello","address": "dwded"}'''
       - name: Get Users
-        run: curl http://localhost:3001/api/user
+        run: curl http://localhost:3001/api/users

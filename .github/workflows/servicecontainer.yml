@@ -1,0 +1,23 @@
+name: Multicontainer Docker
+on: push
+
+jobs:
+  multidocker:
+    runs-on: ubuntu-latest # we would run a job inside a docker container in the virtual machine
+    services:
+      app:
+        image: alialaa17/node-api
+        ports:
+         - 3001:3000
+      mongo:
+        image: mongo
+        ports:
+          - "27017:27017"
+    
+      #optinos: --cpus # define restrictions for the container
+      #volumes:  # we can map volumes to the container
+    steps:
+      - name: Post a user
+        run: "curl -X POST http://localhost:3001/api/users -H 'Content-Type: application/json' -d '{\"username\": \"hello\",\"address\": \"dwded\"}'"
+      - name: Get Users
+        run: curl http://localhost:3001/api/users

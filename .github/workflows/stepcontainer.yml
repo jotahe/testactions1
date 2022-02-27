@@ -1,0 +1,32 @@
+name: Container Docker
+on: push
+
+jobs:
+  docker-steps:
+    runs-on: ubuntu-latest
+    container:
+      image: node:10.18.0-jessie
+    steps:
+      - name: Log node version
+        run: node -v
+      - name: Step with docker
+        uses: docker://node:12.14.1-alpine3.10
+        with:
+          entrypoint: "/bin/echo" # To override the entry point of a docker container
+          args: "Hello from Docker Inside Step"
+      - name: Node Log Version
+        uses: docker://node:12.14.1-alpine3.10
+        with:
+          entrypoint: "/user/local/bin/node" # To pass wntry point we have to check the complete path of executable with type -a command
+          args: "-v"
+  node-docker:
+    runs-on: ubuntu-latest # we would run a job inside a docker container in the virtual machine
+    container:
+      image: node:13.5.0-alpine3.10
+      #optinos: --cpus # define restrictions for the container
+      #volumes:  # we can map volumes to the container
+    steps:
+      - name: Log node node-version
+        run: |     # Display current version and os of our docker 
+          node -v   
+          cat /etc/os-release

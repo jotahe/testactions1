@@ -11,7 +11,7 @@ jobs:
       - name: step output capture
         id: maven-deploy
         run: |
-         $(mvn deploy|grep 'ERROR') | tee mvnrst.log
+         mvn deploy| grep 'ERROR' | tee mvnrst.log
          echo "::set-output name=mvndeployrst::$(cat mvnrst.log)"
       #result_code=${PIPESTATUS[0]}
       #exit $result_code

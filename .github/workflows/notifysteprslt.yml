@@ -13,9 +13,10 @@ jobs:
         run: |
          mvn deploy| grep 'ERROR' | tee mvnrst.log
          echo "::set-output name=mvndeployrst::$(cat mvnrst.log)"
+         echo ${PIPESTATUS[0]}
          result_code=${PIPESTATUS[0]}
-         exit 1
-#         exit $result_code
+         exit $result_code
+#         exit 1
 #      - name: Notify about failure if last step failed
 #        env:
 #          check: ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'ERROR') }} 

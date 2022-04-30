@@ -28,12 +28,12 @@ jobs:
         run: |
           echo "THIS IS THE NORMAL FAILURE"
 
-      work:
-    needs: check
-    if: !contains(needs.check.outputs.status, 'failure')
-    steps:
-      - run: foo
-      - run: ...
+#      work:
+#       needs: check
+#       if: !contains(needs.check.outputs.status, 'failure')
+#       steps:
+#        - run: foo
+#        - run: ...
 
 
 

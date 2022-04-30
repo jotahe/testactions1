@@ -25,17 +25,16 @@ jobs:
       - name: Notify failure on condition
         if: ${{ failure() }}
         run: |
-          if [[ ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'ERROR') }} == true ]]; 
-           then
+          if [[ ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'ERROR') }} == true ]]; then
             cat << EOF > message.json
             {"@type":"MessageCard","@context":"https://schema.org/extensions","summary":"Build library fail!","themeColor":"ff0000","title":"$GITHUB_REPOSITORY Build library fail 💢!","sections":[{"facts":[{"name":"Repository:","value":"$GITHUB_REPOSITORY"},{"name":"Author:","value":"$GITHUB_ACTOR"},{"name":"Branch:","value":"$GITHUB_REF_NAME"},{"name":"Commit:","value":"$GITHUB_SHA"}, {"name":"ErrorMsg","value":"${{ steps.maven-deploy.outputs.mvndeployrst }}"}]}],"potentialAction":[{"@type":"OpenUri","name":"View on GitHub","targets":[{"os":"default","uri":"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"}]}]}
             EOF
-            echo "cat message.json"
+            cat message.json
           else:
             cat << EOF > message.json
             {"@type":"MessageCard","@context":"https://schema.org/extensions","summary":"Build library fail!","themeColor":"ff0000","title":"$GITHUB_REPOSITORY Build library fail 💢!","sections":[{"facts":[{"name":"Repository:","value":"$GITHUB_REPOSITORY"},{"name":"Author:","value":"$GITHUB_ACTOR"},{"name":"Branch:","value":"$GITHUB_REF_NAME"},{"name":"Commit:","value":"$GITHUB_SHA"}]}],"potentialAction":[{"@type":"OpenUri","name":"View on GitHub","targets":[{"os":"default","uri":"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"}]}]}
             EOF
-            echo "cat message.json"
+            cat message.json
           fi
 
 #      work:

@@ -26,7 +26,13 @@ jobs:
       - name: Notify about other failure
         if: ${{ failure() }}
         run: |
-          echo "THIS IS THE NORMAL FAILURE"
+          if [[ ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'ERROR') }} == true ]]; 
+           then
+           echo "THIS IS THE MAVEN FAILURE"
+           echo ${{ steps.maven-deploy.outputs.mvndeployrst }}
+          else:
+           echo "THIS IS THE NORMAL FAILURE"
+          fi
 
 #      work:
 #       needs: check

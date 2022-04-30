@@ -11,9 +11,8 @@ jobs:
       - name: step output capture
         id: maven-deploy
         run: |
-         echo $(ls -al |grep 'README') | tee mvnrst.log
+         echo $(mvn deploy) | tee mvnrst.log
          result_code=${PIPESTATUS[0]}
-         cat mvnrst.log | grep "Error"
          echo "::set-output name=mvndeployrst::$(cat mvnrst.log)"
          exit $result_code
       - name: Notify about failure if last step failed

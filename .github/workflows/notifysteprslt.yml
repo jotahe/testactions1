@@ -11,7 +11,7 @@ jobs:
       - name: step output capture
         id: maven-deploy
         run: |
-         echo $(mvn deploy) | tee mvnrst.log
+         echo $(mvn deploy|grep 'ERROR') | tee mvnrst.log
          result_code=${PIPESTATUS[0]}
          echo "::set-output name=mvndeployrst::$(cat mvnrst.log)"
          exit $result_code
@@ -29,3 +29,13 @@ jobs:
         run: |
           echo "THIS IS THE NORMAL FAILURE"
 
+
+
+ #     - name: Install dependencies
+ #       id: composer-run
+ #       continue-on-error: true
+ #       run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+
+ #     - name: Execute tests
+ #       if: steps.composer-run.outcome == 'success' && steps.composer-run.conclusion == 'success'
+ #       run: vendor/bin/phpunit

@@ -13,7 +13,7 @@ jobs:
         run: |
          mvn deploy| grep 'ERROR' | tee mvnrst.log
          echo "::set-output name=mvndeployrst::$(cat mvnrst.log)"
-#         exit 1
+         exit 1
 #      - name: Notify about failure if last step failed
 #        env:
 #          check: ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'ERROR') }} 
@@ -27,10 +27,15 @@ jobs:
         run: |
           if [[ ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'ERROR') }} == true ]]; 
            then
-           echo "THIS IS THE MAVEN FAILURE"
-           echo ${{ steps.maven-deploy.outputs.mvndeployrst }}
+            cat << EOF > message.json
+            {"@type":"MessageCard","@context":"https://schema.org/extensions","summary":"Build library fail!","themeColor":"ff0000","title":"$GITHUB_REPOSITORY Build library fail 💢!","sections":[{"facts":[{"name":"Repository:","value":"$GITHUB_REPOSITORY"},{"name":"Author:","value":"$GITHUB_ACTOR"},{"name":"Branch:","value":"$GITHUB_REF_NAME"},{"name":"Commit:","value":"$GITHUB_SHA"}, {"name":"ErrorMsg","value":"${{ steps.maven-deploy.outputs.mvndeployrst }}"}]}],"potentialAction":[{"@type":"OpenUri","name":"View on GitHub","targets":[{"os":"default","uri":"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"}]}]}
+            EOF
+            echo "cat message.json"
           else:
-           echo "THIS IS THE NORMAL FAILURE"
+            cat << EOF > message.json
+            {"@type":"MessageCard","@context":"https://schema.org/extensions","summary":"Build library fail!","themeColor":"ff0000","title":"$GITHUB_REPOSITORY Build library fail 💢!","sections":[{"facts":[{"name":"Repository:","value":"$GITHUB_REPOSITORY"},{"name":"Author:","value":"$GITHUB_ACTOR"},{"name":"Branch:","value":"$GITHUB_REF_NAME"},{"name":"Commit:","value":"$GITHUB_SHA"}]}],"potentialAction":[{"@type":"OpenUri","name":"View on GitHub","targets":[{"os":"default","uri":"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"}]}]}
+            EOF
+            echo "cat message.json"
           fi
 
 #      work:

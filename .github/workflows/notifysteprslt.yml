@@ -16,7 +16,6 @@ jobs:
       #result_code=${PIPESTATUS[0]}
       #exit $result_code
       - name: Notify about failure if last step failed
-        if: ${{ failure() }}
         env:
           check: ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'ERROR') }} 
         run: |

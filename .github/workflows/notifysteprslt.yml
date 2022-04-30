@@ -1,0 +1,26 @@
+name: notify last step result
+on:
+   workflow_dispatch:
+     
+
+jobs:
+   notifystepresult:
+      runs-on: ubuntu-20.04
+      # continue-on-error=true this would force to continue other steps no matter the previos step have failed
+      steps:
+      - name: step output capture
+        id: maven-deploy
+        run: |
+         echo $(ls -al |grep 'actions') | tee mvnrst.log
+         result_code=${PIPESTATUS[0]}
+         cat mvnrst.log | grep "Error"
+         echo "::set-output name=mvndeployrst::$(cat mvnrst.log)"
+         exit $result_code
+      - name: Notify about failure if last step failed
+        if: ${{ failure() }}
+        env:
+          check: ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'Error') }} 
+        run: |
+          echo $ {{ steps.maven-deploy.outputs.mvndeployrst }}
+          echo "${check}"
+

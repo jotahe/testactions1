@@ -13,8 +13,8 @@ jobs:
         run: |
          mvn deploy| grep 'ERROR' | tee mvnrst.log
          echo "::set-output name=mvndeployrst::$(cat mvnrst.log)"
-      #result_code=${PIPESTATUS[0]}
-      #exit $result_code
+         result_code=${PIPESTATUS[0]}
+         exit $result_code
       - name: Notify about failure if last step failed
         env:
           check: ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'ERROR') }} 
@@ -22,7 +22,7 @@ jobs:
           echo "THE RESULT FROM CHECK IS"
           echo ${check}
           echo "THIS IS THE RESULT FROM LAST STEP TO NOTIFY"
-          cat ${{ steps.maven-deploy.outputs.mvndeployrst }}
+          echo ${{ steps.maven-deploy.outputs.mvndeployrst }}
       - name: Notify about other failure
         if: ${{ failure() }}
         run: |

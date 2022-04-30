@@ -18,8 +18,14 @@ jobs:
       - name: Notify about failure if last step failed
         if: ${{ failure() }}
         env:
-          check: ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'Error') }} 
+          check: ${{ contains(steps.maven-deploy.outputs.mvndeployrst, 'ERROR') }} 
         run: |
+          echo "THE RESULT FROM CHECK IS"
+          echo ${check}
+          echo "THIS IS THE RESULT FROM LAST STEP TO NOTIFY"
           echo $ {{ steps.maven-deploy.outputs.mvndeployrst }}
-          echo "${check}"
+      - name: Notify about other failure
+        if: ${{ failure() }}
+        run: |
+          echo "THIS IS THE NORMAL FAILURE"
 

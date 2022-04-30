@@ -22,11 +22,18 @@ jobs:
           echo "THE RESULT FROM CHECK IS"
           echo ${check}
           echo "THIS IS THE RESULT FROM LAST STEP TO NOTIFY"
-          echo $ {{ steps.maven-deploy.outputs.mvndeployrst }}
+          cat ${{ steps.maven-deploy.outputs.mvndeployrst }}
       - name: Notify about other failure
         if: ${{ failure() }}
         run: |
           echo "THIS IS THE NORMAL FAILURE"
+
+      work:
+    needs: check
+    if: !contains(needs.check.outputs.status, 'failure')
+    steps:
+      - run: foo
+      - run: ...
 
 
 
